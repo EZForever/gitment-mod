@@ -1,4 +1,4 @@
-import { onChange } from './on-change.js'
+import { onChangeObserve, onChangeAutorun } from './on-change.js'
 import { LANG, LS_ACCESS_TOKEN_KEY, LS_USER_KEY, NOT_INITIALIZED_ERROR } from './constants.js'
 import { getTargetContainer, http, Query } from './utils.js'
 import defaultTheme from './theme/default.js'
@@ -10,7 +10,7 @@ function extendRenderer(instance, renderer) {
     const targetContainer = getTargetContainer(container)
     const render = instance.theme[renderer] || instance.defaultTheme[renderer]
 
-    instance.state = onChange(instance.stateData, () => {
+    onChangeAutorun(instance.stateData, () => {
       const e = render(instance.stateData, instance)
       if (targetContainer.firstChild) {
         targetContainer.replaceChild(e, targetContainer.firstChild)
@@ -81,8 +81,9 @@ export class Gitment {
       reactions: [],
       commentReactions: {},
       currentPage: 1,
+      _onChange: []
     }
-    this.state = this.stateData;
+    this.state = onChangeObserve(this.stateData);
 
     const query = Query.parse()
     if (query.code) {
