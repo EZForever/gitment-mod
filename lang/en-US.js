@@ -10,6 +10,7 @@ export const LANG = {
     INITIALIZE_COMMENTS: 'Initialize Comments',
     LOADING_COMMENTS: 'Loading comments...',
     NO_COMMENT_YET: 'No Comment Yet',
+    COMMENTED_ON: ' commented on ',
     EDITED: 'edited',
     COMMENT_EDITED_AT: 'comment was edited at ',
     CLICK_TO_EXPAND: 'Click to Expand',

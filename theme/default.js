@@ -3,7 +3,7 @@ import { LANG, NOT_INITIALIZED_ERROR } from '../constants.js'
 
 function renderHeader({ meta, user, reactions }, instance) {
   const container = document.createElement('div')
-  container.lang = "en-US"
+  container.lang = LANG.LOCALE
   container.className = 'gitment-container gitment-header-container'
 
   const likeButton = document.createElement('span')
@@ -113,10 +113,10 @@ function renderComments({ meta, comments, commentReactions, currentPage, user, e
           <a class="gitment-comment-name" href="${comment.user.html_url}" target="_blank">
             ${comment.user.login}
           </a>
-          commented on
-          <span title="${createDate}">${createDate.toDateString()}</span>
+          ${LANG.COMMENTED_ON}
+          <span title="${createDate.toLocaleString()}">${createDate.toLocaleDateString()}</span>
           ${ createDate.toString() !== updateDate.toString()
-            ? ` • <span title="${LANG.COMMENT_EDITED_AT}${updateDate}">${LANG.EDITED}</span>`
+            ? ` • <span title="${LANG.COMMENT_EDITED_AT}${updateDate.toLocaleString()}">${LANG.EDITED}</span>`
             : ''
           }
           <div class="gitment-comment-like-btn">${heartIcon} ${comment.reactions.heart || ''}</div>
@@ -148,10 +148,12 @@ function renderComments({ meta, comments, commentReactions, currentPage, user, e
         markdownBody.classList.add('gitment-comment-body-folded')
         markdownBody.style.maxHeight = instance.maxCommentHeight + 'px'
         markdownBody.title = LANG.CLICK_TO_EXPAND
+        markdownBody.setAttribute('data-content', LANG.CLICK_TO_EXPAND)
         markdownBody.onclick = () => {
           markdownBody.classList.remove('gitment-comment-body-folded')
           markdownBody.style.maxHeight = ''
           markdownBody.title = ''
+          markdownBody.setAttribute('data-content', '')
           markdownBody.onclick = null
         }
       }
