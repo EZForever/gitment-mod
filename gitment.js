@@ -45,7 +45,7 @@ export class Gitment {
 
   constructor(options = {}) {
     this.defaultTheme = defaultTheme
-    this.useTheme(defaultTheme)
+    //this.useTheme(defaultTheme)
 
     Object.assign(this, {
       id: window.location.href,
